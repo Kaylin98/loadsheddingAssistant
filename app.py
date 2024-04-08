@@ -48,7 +48,7 @@ def webhook():
             eskom_stage = int(status_data["status"]["eskom"]["stage"])
             
             # Fetch schedule based on today's date
-            schedule_url = "https://developer.sepush.co.za/business/2.0/area?id=jhbcitypower3-10-ferndale&test=current"
+            schedule_url = "https://developer.sepush.co.za/business/2.0/area?id=jhbcitypower3-10-ferndale"
             schedule_response = requests.get(schedule_url, headers=headers)
             
             if schedule_response.status_code == 200:
