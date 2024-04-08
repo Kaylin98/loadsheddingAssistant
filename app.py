@@ -7,6 +7,15 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+def get_today_schedule(json_data):
+    today = datetime.now().strftime("%A")
+    for day in json_data["schedule"]["days"]:
+        if day["name"] == today:
+            return day["stages"]
+    return None
+
+
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     api_key = os.getenv('ESP_API_KEY')
@@ -28,7 +37,15 @@ def webhook():
             # Get Eskom stage
             eskom_stage = int(status_data["status"]["eskom"]["stage"])
             
-           
+            # Fetch schedule based on today's date
+            schedule_url = "https://developer.sepush.co.za/business/2.0/area?id=jhbcitypower3-10-ferndale&test=current"
+            schedule_response = requests.get(schedule_url, headers=headers)
+            
+            if schedule_response.status_code == 200:
+                schedule_data = schedule_response.json()
+                # Get today's schedule
+                stages = get_today_schedule(schedule_data)
+                
 
         return make_response({
             "fulfillmentText": answer,
