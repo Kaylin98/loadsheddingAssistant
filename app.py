@@ -14,6 +14,16 @@ def get_today_schedule(json_data):
             return day["stages"]
     return None
 
+def filter_passed_times(time_slots):
+    current_time = datetime.now().strftime("%H:%M")
+    return [time_slot for time_slot in time_slots if time_slot >= current_time]
+
+def format_time_slots(time_slots):
+    formatted_times = []
+    for slot in time_slots:
+        start, end = slot.split("-")
+        formatted_times.append(f"from {start} to {end}")
+    return formatted_times
 
 
 @app.route('/webhook', methods=['POST'])
@@ -45,7 +55,14 @@ def webhook():
                 schedule_data = schedule_response.json()
                 # Get today's schedule
                 stages = get_today_schedule(schedule_data)
-                
+                if stages:
+                    if eskom_stage < len(stages):
+                        current_stages = filter_passed_times(stages[eskom_stage])
+                        if current_stages:
+                            formatted_times = format_time_slots(current_stages)
+                            answer = "The next upcoming outages are at " + ", and ".join(formatted_times)
+                        else:
+                            answer = "No outages scheduled for today."
 
         return make_response({
             "fulfillmentText": answer,
