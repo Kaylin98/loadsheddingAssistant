@@ -2,6 +2,9 @@
 
 This code provides a simple solution to integrate Eskom Loadshedding Schedule into a conversational platform using Dialogflow API v2. With this webhook, you can ask your Google Assistant or Google Home device about your loadshedding schedule, and it will provide the information using Eskom's API.
 
+![Alt text](https://www.cnet.com/a/img/resize/626d94e619325c8a7e0b00863794b3e81835ea69/hub/2017/12/14/35cd1451-6334-408c-b21e-8f2f5811bf02/google-home-max-5.jpg?auto=webp&fit=crop&height=675&width=1200)
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
